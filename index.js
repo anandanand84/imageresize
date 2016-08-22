@@ -1,3 +1,4 @@
+'use strict';
 var Canvas = require('canvas')
     , Image = Canvas.Image
 
