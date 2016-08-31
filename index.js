@@ -33,7 +33,7 @@ var resize = function(input) {
     img.src = dataUrl;
     ctx.drawImage(img, 0, 0, toWidth, toHeight);
 
-    var reducedImageData = ctx.getImageData(0,0,width,height);
+    var reducedImageData = ctx.getImageData(0,0,toWidth,toHeight);
 
     let dataArray = reducedImageData.data;
     let pixelsArrayReduced = new Array(reducedImageData.width * reducedImageData.height);
