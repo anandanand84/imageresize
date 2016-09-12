@@ -64,11 +64,11 @@ var getPixelsForStockData = function(data) {
     var width = canvasWidth;
     var start = Math.ceil(canvasWidth * 0.10);
     var x = d3.scale.linear().range([start, width - start]).domain([0 , data.length]);
-    var y = d3.scale.log().range([start, height - start]).domain(d3.extent(data, function(d) { return d.close; }));
+    var y = d3.scale.log().range([start, height - start]).domain(d3.extent(data, function(d) { return d; }));
 
     var line = d3.svg.line()
         .x(function(d, i) { return x(i); })
-        .y(function(d) { return y(d.close); })
+        .y(function(d) { return y(d); })
         .interpolate('basis-open');
     ctx.strokeStyle = 'black';
     ctx.strokeWidth = 2;
