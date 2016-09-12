@@ -18,7 +18,7 @@
   "homepage": "https://github.com/anandanand84/imageresize#readme",
   "dependencies": {
     "canvas": "^1.4.0",
-    "d3": "^4.2.2",
-    "d3-scale": "^1.0.3"
+    "canvas-5-polyfill": "^0.1.1",
+    "d3": "^3.2.2"
   }
 }

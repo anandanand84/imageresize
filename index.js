@@ -1,7 +1,7 @@
 'use strict';
+var d3     = require('d3');
 var Canvas = require('canvas')
     , Image = Canvas.Image
-    ,d3     = require('d3');
 
 var resize = function(input) {
     let pixelsArray = input.pixelsArray;
@@ -58,6 +58,10 @@ var getPixelsForStockData = function(data) {
     var canvasHeight = 28;
     var canvas = new Canvas(canvasWidth, canvasHeight);
     var ctx = canvas.getContext('2d');
+    global.CanvasRenderingContext2D = {};
+    global.CanvasRenderingContext2D.prototype = ctx;
+    require('canvas-5-polyfill');
+
     if(!data || data.length <= 0)
         return [];
     var height =  canvasHeight;
