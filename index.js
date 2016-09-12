@@ -1,6 +1,7 @@
 'use strict';
 var Canvas = require('canvas')
     , Image = Canvas.Image
+    ,d3     = require('d3');
 
 var resize = function(input) {
     let pixelsArray = input.pixelsArray;
@@ -52,4 +53,49 @@ var resize = function(input) {
     return pixelsArrayReduced;
 }
 
-module.exports = resize;
+var getPixelsForStockData = function(data) {
+    var canvasWidth = 28;
+    var canvasHeight = 28;
+    var canvas = new Canvas(canvasWidth, canvasHeight);
+    var ctx = canvas.getContext('2d');
+    if(!data || data.length <= 0)
+        return [];
+    var height =  canvasHeight;
+    var width = canvasWidth;
+    var start = Math.ceil(canvasWidth * 0.10);
+    var x = d3.scale.linear().range([start, width - start]).domain([0 , data.length]);
+    var y = d3.scale.log().range([start, height - start]).domain(d3.extent(data, function(d) { return d.close; }));
+
+    var line = d3.svg.line()
+        .x(function(d, i) { return x(i); })
+        .y(function(d) { return y(d.close); })
+        .interpolate('basis-open');
+    ctx.strokeStyle = 'black';
+    ctx.strokeWidth = 2;
+    var path = line(data);
+    var p = new Path2D(path);
+    ctx.beginPath();
+    ctx.stroke(p);
+
+    var imageData = ctx.getImageData(0,0,width, height);
+    var dataArray = imageData.data;
+    var pixelsArray = new Array(imageData.width * imageData.height);
+    for(var i = 0,pixelCount = 0, n = dataArray.length; i < n; i += 4,pixelCount++) {
+        var red = dataArray[i];
+        var green = dataArray[i + 1];
+        var blue = dataArray[i + 2];
+        var alpha = dataArray[i + 3];
+        var pixelPresent = ((red > 0) || (green > 0 ) || (blue > 0) || (alpha > 0))
+        if(pixelPresent){
+            pixelsArray[pixelCount] = (1);
+        }else {
+            pixelsArray[pixelCount] = (0);
+        }
+    }
+    return pixelsArray;
+};
+
+module.exports = {
+    resize : resize,
+    getPixelsForStockData : getPixelsForStockData
+};

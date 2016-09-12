@@ -1,5 +1,5 @@
 {
-  "name": "imageresize",
+  "name": "canvas-operations",
   "version": "1.0.2",
   "description": "Used to resize handwritten pixel alpha values for nueral network pattern recognition",
   "main": "index.js",
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/anandanand84/imageresize#readme",
   "dependencies": {
-    "canvas": "^1.4.0"
+    "canvas": "^1.4.0",
+    "d3": "^4.2.2",
+    "d3-scale": "^1.0.3"
   }
 }
