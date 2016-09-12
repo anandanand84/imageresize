@@ -3,6 +3,16 @@ var d3     = require('d3');
 var Canvas = require('canvas')
     , Image = Canvas.Image
 
+var canvasWidth = 28;
+var canvasHeight = 28;
+var canvas = new Canvas(canvasWidth, canvasHeight);
+var ctx = canvas.getContext('2d');
+global.CanvasRenderingContext2D = {};
+global.CanvasRenderingContext2D.prototype = ctx;
+require('canvas-5-polyfill');
+ctx.strokeStyle = 'black';
+ctx.strokeWidth = 2;
+
 var resize = function(input) {
     let pixelsArray = input.pixelsArray;
     var size = Math.sqrt(input.pixelsArray.length)
@@ -54,14 +64,7 @@ var resize = function(input) {
 }
 
 var getPixelsForStockData = function(data) {
-    var canvasWidth = 28;
-    var canvasHeight = 28;
-    var canvas = new Canvas(canvasWidth, canvasHeight);
-    var ctx = canvas.getContext('2d');
-    global.CanvasRenderingContext2D = {};
-    global.CanvasRenderingContext2D.prototype = ctx;
-    require('canvas-5-polyfill');
-
+    ctx.clearRect(0,0, canvasWidth, canvasHeight);
     if(!data || data.length <= 0)
         return [];
     var height =  canvasHeight;
@@ -74,8 +77,6 @@ var getPixelsForStockData = function(data) {
         .x(function(d, i) { return x(i); })
         .y(function(d) { return y(d); })
         .interpolate('basis-open');
-    ctx.strokeStyle = 'black';
-    ctx.strokeWidth = 2;
     var path = line(data);
     var p = new Path2D(path);
     ctx.beginPath();
