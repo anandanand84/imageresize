@@ -1,6 +1,6 @@
 {
   "name": "canvas-operations",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Used to resize handwritten pixel alpha values for nueral network pattern recognition",
   "main": "index.js",
   "scripts": {
